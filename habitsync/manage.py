@@ -15,8 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 import os
-if not os.environ.get("DJANGO_SETTINGS_MODULE"):
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "habitsync.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "habitsync.settings")
 
 from django.contrib import admin
 from django.urls import path, include

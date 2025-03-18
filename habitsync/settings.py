@@ -36,9 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # -----------> Custom Apps
-    'tracker'
+    'django.contrib.sessions',  # <-- Added sessions here
+    'tracker',
 ]
 
 MIDDLEWARE = [

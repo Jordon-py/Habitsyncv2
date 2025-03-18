@@ -2,8 +2,9 @@ from django.urls import path
 from . import views
 
 app_name = "tracker"
+
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('habits/', views.habits, name='habits'),
     path('create/', views.create, name='create'),
     path('update/<int:habit_id>/', views.update, name='update'),
     path('delete/<int:habit_id>/', views.delete, name='delete'),
@@ -14,6 +15,4 @@ urlpatterns = [
     path('habit/<int:habit_id>/complete/', views.complete, name='complete'),
     path('habit/<int:habit_id>/incomplete/', views.incomplete, name='incomplete'),
     path('habit/<int:habit_id>/stats/', views.stats, name='stats'),
-  
-    
 ]
