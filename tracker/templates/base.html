@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     {% load static %}
     <title>{% block title %}HabitSync{% endblock %}</title>
@@ -9,13 +12,17 @@
 </head>
 <body>
     <header>
-        
-        <h1>{% block header %}Welcome to HabitSync{% endblock %}</h1>
+       
+        <h1 class="ballet-font">{% block header %}Welcome to HabitSync{% endblock %}</h1>
             <nav>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'tracker:logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'tracker:login' %}">Login</a>
+                {% endif %}
                 <a href="{% url 'tracker:home' %}">Home</a>
                 <a href="{% url 'tracker:habits' %}">Habits</a>
                 <a href="{% url 'tracker:about' %}">About</a>
-
             </nav>
 
     </header>

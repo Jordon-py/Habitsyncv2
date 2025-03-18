@@ -1,10 +1,11 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.views import LogoutView, LoginView
 
 app_name = "tracker"
 
 urlpatterns = [
-    path('', views.home, name='home'),  # Home page for empty path
+    path('', views.home, name='home'),  
     path('habits/', views.habits, name='habits'),
     path('create/', views.create, name='create'),
     path('update/<int:habit_id>/', views.update, name='update'),
@@ -16,5 +17,8 @@ urlpatterns = [
     path('habit/<int:habit_id>/complete/', views.complete, name='complete'),
     path('habit/<int:habit_id>/incomplete/', views.incomplete, name='incomplete'),
     path('habit/<int:habit_id>/stats/', views.stats, name='stats'),
-    path('about/', views.about, name='about'),  # Added about URL pattern
+    path('about/', views.about, name='about'), 
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('logout/', LogoutView.as_view(next_page='tracker:home'), name='logout'),
+    path('register/', views.register, name='register'),
 ]
