@@ -11,7 +11,7 @@ FREQUIENCY_CHOICES = (
 )
 
 class Habit(models.Model):
-    user = models.ForeignKey(User(), on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=80)
     description = models.TextField(blank=True)
     frequency = models.CharField(max_length=10, choices=FREQUIENCY_CHOICES, default='daily')
@@ -20,4 +20,4 @@ class Habit(models.Model):
 
     
     def __str__(self):
-        return self.name, self.description, self.created_at, self.user, self.frequency
+        return self.name

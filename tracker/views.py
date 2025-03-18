@@ -1,23 +1,71 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from .models import Habit
-from django.contrib.auth.models import User
+from .forms import HabitForm
 
-# Create your views here.
+# Home view renders the dashboard using home.html
+def home(request):
+    if request.user.is_authenticated:
+        # Retrieve habits for the logged-in user
+        habits = Habit.objects.filter(user=request.user)
+    else:
+        habits = []
+    return render(request, 'home.html', {'habits': habits})
+
+def about(request):
+    return render(request, 'about.html', {})
+
+@login_required
 def habits(request):
-    return HttpResponse("Habits")
+    habits = Habit.objects.filter(user=request.user)
+    return render(request, 'habits.html', {'habits': habits})
 
+@login_required
 def create(request):
-    return HttpResponse("Create Habit")
+    if request.method == 'POST':
+        form = HabitForm(request.POST)
+        if form.is_valid():
+            # Create habit but don't save to DB yet
+            habit = form.save(commit=False)
+            # Add current user to habit
+            habit.user = request.user
+            # Save to DB
+            habit.save()
+            return redirect('tracker:habits')
+    else:
+        form = HabitForm()
+    
+    return render(request, 'create.html', {'form': form})
 
+@login_required
 def update(request, habit_id):
-    return HttpResponse(f"Update Habit {habit_id}")
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+    
+    if request.method == 'POST':
+        form = HabitForm(request.POST, instance=habit)
+        if form.is_valid():
+            form.save()
+            return redirect('tracker:habits')
+    else:
+        form = HabitForm(instance=habit)
+    
+    return render(request, 'update.html', {'form': form, 'habit': habit})
 
+@login_required
 def delete(request, habit_id):
-    return HttpResponse(f"Delete Habit {habit_id}")
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+    
+    if request.method == 'POST':
+        habit.delete()
+        return redirect('tracker:habits')
+    
+    return render(request, 'delete.html', {'habit': habit})
 
+@login_required
 def habit(request, habit_id):
-    return HttpResponse(f"Habit {habit_id}")
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+    return render(request, 'habit_detail.html', {'habit': habit})
 
 def record(request, habit_id):
     return HttpResponse(f"Record Habit {habit_id}")

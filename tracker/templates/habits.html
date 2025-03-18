@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Your Habits - HabitSync{% endblock %}
+
+{% block head_extra %}
+  <link rel="stylesheet" href="{% static 'css/habits.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="habits-container">
+    <header class="page-header">
+        <h2>Your Habits</h2>
+        <a href="{% url 'tracker:create' %}" class="btn btn-primary">+ New Habit</a>
+    </header>
+    
+    <div class="habits-list">
+        {% for habit in habits %}
+            <div class="habit-item">
+                <div class="habit-info">
+                    <h3>{{ habit.name }}</h3>
+                    <span class="badge">{{ habit.frequency }}</span>
+                </div>
+                <p>{{ habit.description|truncatechars:100 }}</p>
+                <div class="habit-actions">
+                    <a href="{% url 'tracker:habit' habit.id %}" class="btn">View</a>
+                    <a href="{% url 'tracker:update' habit.id %}" class="btn">Edit</a>
+                    <a href="{% url 'tracker:delete' habit.id %}" class="btn">Delete</a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="no-habits">
+                <p>You haven't created any habits yet. <a href="{% url 'tracker:create' %}">Create your first habit</a>.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

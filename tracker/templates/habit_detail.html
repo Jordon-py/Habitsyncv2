@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ habit.name }} - HabitSync{% endblock %}
+
+{% block head_extra %}
+  <link rel="stylesheet" href="{% static 'css/detail.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="habit-detail">
+    <div class="header-actions">
+        <h2>{{ habit.name }}</h2>
+        <div class="actions">
+            <a href="{% url 'tracker:update' habit.id %}" class="btn">Edit</a>
+            <a href="{% url 'tracker:delete' habit.id %}" class="btn">Delete</a>
+        </div>
+    </div>
+    
+    <div class="habit-info-card">
+        <div class="habit-property">
+            <h3>Description</h3>
+            <p>{{ habit.description|default:"No description provided." }}</p>
+        </div>
+        
+        <div class="habit-property">
+            <h3>Frequency</h3>
+            <p>{{ habit.frequency }}</p>
+        </div>
+        
+        <div class="habit-property">
+            <h3>Created</h3>
+            <p>{{ habit.created_at|date:"F j, Y" }}</p>
+        </div>
+        
+        <div class="habit-property">
+            <h3>Last Updated</h3>
+            <p>{{ habit.updated_at|date:"F j, Y" }}</p>
+        </div>
+    </div>
+    
+    <div class="habit-actions">
+        <h3>Quick Actions</h3>
+        <div class="action-buttons">
+            <a href="{% url 'tracker:record' habit.id %}" class="btn">Record</a>
+            <a href="{% url 'tracker:complete' habit.id %}" class="btn">Complete</a>
+            <a href="{% url 'tracker:incomplete' habit.id %}" class="btn">Incomplete</a>
+            <a href="{% url 'tracker:stats' habit.id %}" class="btn">View Stats</a>
+        </div>
+    </div>
+    
+    <div class="back-link">
+        <a href="{% url 'tracker:habits' %}">← Back to Habits</a>
+    </div>
+</div>
+{% endblock %}

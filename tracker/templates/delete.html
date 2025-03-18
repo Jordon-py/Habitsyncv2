@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Delete Habit - HabitSync{% endblock %}
+
+{% block head_extra %}
+  <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="confirm-delete">
+    <h2>Delete Habit</h2>
+    
+    <div class="warning">
+        <p>Are you sure you want to delete the habit <strong>"{{ habit.name }}"</strong>?</p>
+        <p>This action cannot be undone.</p>
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-actions">
+            <button type="submit" class="btn btn-danger">Yes, Delete</button>
+            <a href="{% url 'tracker:habits' %}" class="btn">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

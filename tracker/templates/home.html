@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Habit Tracker{% endblock %}
+
+{% block head_extra %}
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+  {% if request.user.is_authenticated %}
+    <section class="dashboard">
+      <div class="dashboard-header">
+        <h2>Welcome, {{ request.user }}!</h2>
+        <p>Manage Your Habits Effortlessly </p>
+        <a href="{% url 'tracker:create' %}" class="btn btn-primary" title="Create a New Habit">+ New Habit</a>
+      </div>
+      <div class="habit-cards">
+        {% for habit in habits %}
+          <div class="habit-card" data-habit-id="{{ habit.id }}">
+            <header class="card-header">
+              <h3>{{ habit.name }}</h3>
+              <span class="badge" title="Habit Frequency">{{ habit.frequency }}</span>
+            </header>
+            <div class="card-body">
+              <p>{{ habit.description|default:"No description provided." }}</p>
+            </div>
+            <footer class="card-footer">
+              <div class="primary-actions">
+                <a href="{% url 'tracker:habit' habit.id %}" class="btn" title="View">View</a>
+                <a href="{% url 'tracker:update' habit.id %}" class="btn" title="Edit">Edit</a>
+                <a href="{% url 'tracker:delete' habit.id %}" class="btn" title="Delete">Delete</a>
+              </div>
+              <div class="secondary-actions">
+                <a href="{% url 'tracker:record' habit.id %}" class="btn" title="Record">Record</a>
+                <a href="{% url 'tracker:complete' habit.id %}" class="btn" title="Complete">Complete</a>
+                <a href="{% url 'tracker:incomplete' habit.id %}" class="btn" title="Incomplete">Incomplete</a>
+                <a href="{% url 'tracker:stats' habit.id %}" class="btn" title="Stats">Stats</a>
+              </div>
+              <button class="toggle-actions btn" title="More Options">More</button>
+            </footer>
+          </div>
+        {% empty %}
+          <div class="no-habits">
+            <p>No habits found. Start by creating your first habit!</p>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  {% else %}
+    <section class="guest-message">
+      <h2>Welcome to Habit Tracker!</h2>
+      <p>Please <a href="{% url 'login' %}" title="Log In">log in</a> to access your personalized dashboard and manage your habits.</p>
+    </section>
+  {% endif %}
+{% endblock %}
+
+{% block script_extra %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const toggleButtons = document.querySelectorAll('.toggle-actions');
+  toggleButtons.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const card = btn.closest('.habit-card');
+      const secActions = card.querySelector('.secondary-actions');
+      if (!secActions.style.display || secActions.style.display === "none") {
+        secActions.style.display = "flex";
+        btn.textContent = "Less";
+      } else {
+        secActions.style.display = "none";
+        btn.textContent = "More";
+      }
+    });
+  });
+});
+</script>
+{% endblock %}

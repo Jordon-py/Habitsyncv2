@@ -27,4 +27,5 @@ admin.site.has_permission = lambda request: request.user.is_authenticated
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('habit/', include('tracker.urls')),
+    path('', include('tracker.urls')),
 ]

@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -55,7 +54,7 @@ ROOT_URLCONF = 'habitsync.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/home/cjordon/code/ga/projects/Unit4-Project/tracker/templates'],  # <-- Added templates directory here
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
