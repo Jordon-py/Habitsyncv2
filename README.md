@@ -11,7 +11,7 @@ This project is a Django-based web application implementing full CRUD functional
 - Deployed online for public access
 
 ## Getting Started
-- **Deployed App:** [Insert link here]
+- **Deployed App:**
 
 
 ### Installation (For Local Development)
