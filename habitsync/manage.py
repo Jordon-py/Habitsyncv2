@@ -20,8 +20,6 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "habitsync.settings")
 from django.contrib import admin
 from django.urls import path, include
 
-# Override admin permission check to allow any authenticated user (for testing only)
-admin.site.has_permission = lambda request: request.user.is_authenticated
 
 urlpatterns = [
     path('admin/', admin.site.urls),

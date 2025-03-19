@@ -7,12 +7,12 @@
 
 {% block content %}
   {% if request.user.is_authenticated %}
-    <section class="dashboard" aria-label="User Dashboard">
-      <div class="dashboard-header">
-        <h2>Welcome, {{ request.user.username }}!</h2>
+    <section class="dashboard" >
+      <div class="ballet-font">
+        <h2 class= "ballet-font">Welcome, {{ request.user.username }}!</h2>
         <p>Your habits at a glance. Manage them effortlessly.</p>
         <a href="{% url 'tracker:create' %}" class="btn btn-primary" 
-           aria-label="Create a new habit" title="Create a New Habit" data-action="create">+ New Habit</a>
+           title="Create a New Habit" data-action="create">+ New Habit</a>
       </div>
       <div class="habit-cards">
         {% for habit in habits %}
@@ -26,16 +26,16 @@
             </div>
             <footer class="card-footer">
               <div class="action-group">
-                <a href="{% url 'tracker:habit' habit.id %}" class="btn" aria-label="View habit details" title="View">View</a>
-                <a href="{% url 'tracker:update' habit.id %}" class="btn" aria-label="Edit habit" title="Edit">Edit</a>
-                <a href="{% url 'tracker:delete' habit.id %}" class="btn" aria-label="Delete habit" title="Delete">Delete</a>
+                <a href="{% url 'tracker:habit' habit.id %}" class="btn" ils" title="View">View</a>
+                <a href="{% url 'tracker:update' habit.id %}" class="btn" le="Edit">Edit</a>
+                <a href="{% url 'tracker:delete' habit.id %}" class="btn" itle="Delete">Delete</a>
               </div>
               <div class="action-group">
-                <a href="{% url 'tracker:record' habit.id %}" class="btn" aria-label="Record habit activity" title="Record">Record</a>
-                <a href="{% url 'tracker:complete' habit.id %}" class="btn" aria-label="Mark habit as complete" title="Complete">Complete</a>
-                <a href="{% url 'tracker:incomplete' habit.id %}" class="btn" aria-label="Mark habit as incomplete" title="Incomplete">Incomplete</a>
+                <a href="{% url 'tracker:record' habit.id %}" class="btn" tivity" title="Record">Record</a>
+                <a href="{% url 'tracker:complete' habit.id %}" class="btn" omplete" title="Complete">Complete</a>
+                <a href="{% url 'tracker:incomplete' habit.id %}" class="btn" ncomplete" title="Incomplete">Incomplete</a>
               </div>
-              <a href="{% url 'tracker:stats' habit.id %}" class="btn" aria-label="View habit statistics" title="Stats">Stats</a>
+              <a href="{% url 'tracker:stats' habit.id %}" class="btn" istics" title="Stats">Stats</a>
             </footer>
           </div>
         {% empty %}

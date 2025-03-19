@@ -35,8 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sessions',  # <-- Added sessions here
+    'django.contrib.sessions', 
     'tracker',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -125,3 +126,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+# Redirect users after login/logout
+LOGIN_REDIRECT_URL = 'home' 
+LOGOUT_REDIRECT_URL = 'home' 
+LOGIN_URL = 'login' 

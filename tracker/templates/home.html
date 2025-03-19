@@ -9,6 +9,7 @@
 
 {% block content %}
   {% if request.user.is_authenticated %}
+  <p><a href="{% url 'tracker:logout' %}">Logout</a></p>
     <section class="dashboard">
       <div class="dashboard-header">
         <h2>Welcome, {{ request.user }}!</h2>
