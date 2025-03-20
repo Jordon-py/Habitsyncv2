@@ -17,12 +17,21 @@ except ImportError:
     pass  # Skip if python-dotenv is not installed
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-1wh=s-)8%1$)n5@5!c3+-h=p@3sen&0u!*93a_f+=s+l(+383!')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+if not SECRET_KEY:
+    print("WARNING: SECRET_KEY environment variable not set. This is insecure in production.")
+    SECRET_KEY = 'django-insecure-1wh=s-)8%1$)n5@5!c3+-h=p@3sen&0u!*93a_f+=s+l(+383!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# Set DEBUG to True for local development
+DEBUG = os.environ.get('DEBUG') =='False'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.herokuapp.com']
+# Force DEBUG to False in production
+if os.environ.get('DYNO'):  # Check if running on Heroku
+    DEBUG = False
+
+# Convert ALLOWED_HOSTS from string to list by splitting on commas
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,habitsync-4c41c4781ea2.herokuapp.com').split(',')
 
 # Application definition
 
@@ -131,9 +140,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'tracker/static'),
 ]
 
-# Use WhiteNoise for static files only if it's installed
-if USE_WHITENOISE:
+# Always use WhiteNoise in production for static files
+if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+else:
+    # Use the default storage in development
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

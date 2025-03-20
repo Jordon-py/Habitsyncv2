@@ -5,9 +5,3 @@ gunicorn==21.2.0
 dj-database-url==2.1.0
 whitenoise==6.6.0
 python-dotenv==1.0.0
-# Remove the following lines since they're not directly needed for the project
-# and many are system-specific packages that can cause installation issues
-# argcomplete==3.5.3
-# attrs==23.2.0
-# Automat==22.10.0
-# ... other system packages

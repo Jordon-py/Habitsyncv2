@@ -1,15 +1,4 @@
-/* Define CSS variables for theme consistency */
-:root {
-    --primary-color: #a777e3;
-    --secondary-color: #6e8efb;
-    --success-color: #28a745;
-    --background-color: #f7f9fc;
-    --text-color: #2c3e50;
-    --subtext-color: #34495e;
-    --btn-padding: 10px 15px;
-    --btn-radius: 5px;
-    --transition-speed: 0.3s;
-}
+/* Using global variables defined in main.css for consistency */
 
 .dashboard-header {
   margin-bottom: 20px;
@@ -28,8 +17,8 @@
   justify-content: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: var(--background-color)/ honeydew;
-  color: var(--text-color)/ black;
+  background-color: var(--background-color);
+  color: var(--text-color);
   min-height: fit-content;
   padding: 1rem;
 }

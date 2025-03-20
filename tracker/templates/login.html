@@ -1,11 +1,22 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login - HabitSync{% endblock %}
+
+{% block head_extra %}
+  <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{% endblock %}
 
 {% block content %}
+<div class="form-container">
   <h2>Login</h2>
-  <form method="post">
+  <form method="post" class="habit-form">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Login</button>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Login</button>
+      <a href="{% url 'tracker:register' %}" class="btn">Don't have an account?</a>
+    </div>
   </form>
-  <p>Don't have an account? <a href="{% url 'tracker:register' %}">Sign up</a></p>
+</div>
 {% endblock %}
