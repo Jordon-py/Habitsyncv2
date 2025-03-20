@@ -1,1 +1,1 @@
-web: gunicorn habitsync.wsgi --log-file
+web: gunicorn habitsync.wsgi --log-file -

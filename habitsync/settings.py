@@ -6,7 +6,6 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Try to load environment variables if python-dotenv is installed
@@ -14,23 +13,23 @@ try:
     from dotenv import load_dotenv
     load_dotenv()
 except ImportError:
-    pass  # Skip if python-dotenv is not installed
+    pass
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 if not SECRET_KEY:
-    print("WARNING: SECRET_KEY environment variable not set. This is insecure in production.")
-    SECRET_KEY = 'django-insecure-1wh=s-)8%1$)n5@5!c3+-h=p@3sen&0u!*93a_f+=s+l(+383!'
+    raise RuntimeError("SECRET_KEY environment variable not set. Aborting...")
 
-# Fix DEBUG setting: default to False for production
+# Default: False for production (Heroku)
 DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 't')
 if os.environ.get('DYNO'):  # Running on Heroku
     DEBUG = False
 
-# Update ALLOWED_HOSTS to trim any extra whitespace
-ALLOWED_HOSTS = [host.strip() for host in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,habitsync-4c41c4781ea2.herokuapp.com').split(',')]
-
-# Application definition
+# Parse ALLOWED_HOSTS from environment
+ALLOWED_HOSTS = [host.strip() for host in os.environ.get(
+    'ALLOWED_HOSTS',
+    'localhost,127.0.0.1,habitsync-4c41c4781ea2.herokuapp.com'
+).split(',')]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,11 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sessions', 
+    'django.contrib.sessions',
     'tracker',
 ]
 
-# Check if whitenoise is installed
+# Whitenoise check
 USE_WHITENOISE = False
 try:
     import whitenoise
@@ -52,7 +51,6 @@ except ImportError:
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # Add whitenoise conditionally if installed
     *(['whitenoise.middleware.WhiteNoiseMiddleware'] if USE_WHITENOISE else []),
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -67,7 +65,7 @@ ROOT_URLCONF = 'habitsync.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'tracker/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'tracker', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -82,21 +80,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'habitsync.wsgi.application'
 
-
 # Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-# Default to SQLite for local development if no DATABASE_URL is provided
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', 'sqlite:////' + os.path.join(BASE_DIR, 'db.sqlite3')),
+        default=os.environ.get(
+            'DATABASE_URL',
+            'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+        ),
         conn_max_age=600,
     )
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -113,43 +106,26 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Extra places for collectstatic to find static files
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'tracker/static'),
+    os.path.join(BASE_DIR, 'tracker', 'static'),
 ]
 
-# Always use WhiteNoise in production for static files
+# WhiteNoise for production
 if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else:
-    # Use the default storage in development
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Redirect users after login/logout
-LOGIN_REDIRECT_URL = 'tracker:home' 
-LOGOUT_REDIRECT_URL = 'tracker:home' 
+# Redirect URLs
+LOGIN_REDIRECT_URL = 'tracker:home'
+LOGOUT_REDIRECT_URL = 'tracker:home'
 LOGIN_URL = 'tracker:login'
