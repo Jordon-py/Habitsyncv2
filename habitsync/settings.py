@@ -5,13 +5,16 @@ Django settings for habitsync project.
 import os
 from pathlib import Path
 import dj_database_url
-from dotenv import load_dotenv
-
-# Load environment variables from .env file if it exists
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Try to load environment variables if python-dotenv is installed
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # Skip if python-dotenv is not installed
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-1wh=s-)8%1$)n5@5!c3+-h=p@3sen&0u!*93a_f+=s+l(+383!')
@@ -31,12 +34,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sessions', 
     'tracker',
-    'accounts',
+    # 'accounts',  # Commented out as it appears this app isn't in use
 ]
+
+# Check if whitenoise is installed
+USE_WHITENOISE = False
+try:
+    import whitenoise
+    USE_WHITENOISE = True
+except ImportError:
+    pass
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add whitenoise for static files
+    # Add whitenoise conditionally if installed
+    *(['whitenoise.middleware.WhiteNoiseMiddleware'] if USE_WHITENOISE else []),
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -115,7 +127,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Use WhiteNoise for static files only if it's installed
+if USE_WHITENOISE:
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

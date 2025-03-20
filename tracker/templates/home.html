@@ -51,7 +51,7 @@
   {% else %}
     <section class="guest-message">
       <h2>Welcome to Habit Tracker!</h2>
-      <p>Please <a href="{% url 'login' %}" title="Log In">log in</a> to access your personalized dashboard and manage your habits.</p>
+      <p>Please <a href="{% url 'tracker:login' %}" title="Log In">log in</a> to access your personalized dashboard and manage your habits.</p>
     </section>
   {% endif %}
 {% endblock %}
