@@ -11,6 +11,7 @@ def home(request):
     if request.user.is_authenticated:
         # Retrieve habits for the logged-in user
         habits = Habit.objects.filter(user=request.user)
+        return render(request, 'dashboard.html', {'habits': habits})
     else:
         habits = []
     return render(request, 'home.html', {'habits': habits})
@@ -39,6 +40,7 @@ def create(request):
         form = HabitForm()
     
     return render(request, 'create.html', {'form': form})
+
 
 @login_required
 def update(request, habit_id):
