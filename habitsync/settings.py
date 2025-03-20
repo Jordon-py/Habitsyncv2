@@ -22,16 +22,13 @@ if not SECRET_KEY:
     print("WARNING: SECRET_KEY environment variable not set. This is insecure in production.")
     SECRET_KEY = 'django-insecure-1wh=s-)8%1$)n5@5!c3+-h=p@3sen&0u!*93a_f+=s+l(+383!'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# Set DEBUG to True for local development
-DEBUG = os.environ.get('DEBUG') =='False'
-
-# Force DEBUG to False in production
-if os.environ.get('DYNO'):  # Check if running on Heroku
+# Fix DEBUG setting: default to False for production
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 't')
+if os.environ.get('DYNO'):  # Running on Heroku
     DEBUG = False
 
-# Convert ALLOWED_HOSTS from string to list by splitting on commas
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,habitsync-4c41c4781ea2.herokuapp.com').split(',')
+# Update ALLOWED_HOSTS to trim any extra whitespace
+ALLOWED_HOSTS = [host.strip() for host in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,habitsync-4c41c4781ea2.herokuapp.com').split(',')]
 
 # Application definition
 
