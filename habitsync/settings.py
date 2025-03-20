@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sessions', 
     'tracker',
-    # 'accounts',  # Commented out as it appears this app isn't in use
 ]
 
 # Check if whitenoise is installed
@@ -62,7 +61,7 @@ ROOT_URLCONF = 'habitsync.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'tracker/templates')],  # Use relative path
+        'DIRS': [os.path.join(BASE_DIR, 'tracker/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,11 +80,10 @@ WSGI_APPLICATION = 'habitsync.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# Database configuration
-# Use DATABASE_URL environment variable if available, otherwise use default
+# Default to SQLite for local development if no DATABASE_URL is provided
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', 'postgresql://vegas:vegas@localhost:5432/habitsync_db'),
+        default=os.environ.get('DATABASE_URL', 'sqlite:////' + os.path.join(BASE_DIR, 'db.sqlite3')),
         conn_max_age=600,
     )
 }
@@ -127,6 +125,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Extra places for collectstatic to find static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'tracker/static'),
+]
 
 # Use WhiteNoise for static files only if it's installed
 if USE_WHITENOISE:
