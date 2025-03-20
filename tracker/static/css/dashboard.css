@@ -1,28 +1,28 @@
-/* Define CSS variables for theme consistency */
-:root {
-    --primary-color: #a777e3;
-    --secondary-color: #6e8efb;
-    --success-color: #28a745;
-    --background-color: #f7f9fc;
-    --text-color: #2c3e50;
-    --subtext-color: #34495e;
-    --btn-padding: 10px 15px;
-    --btn-radius: 5px;
-    --transition-speed: 0.3s;
+/* Using global variables defined in main.css for consistency */
 
+.dashboard-header {
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  padding: 20px;
+}
 
+.dashboard {
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  min-height: fit-content;
+  padding: 1rem;
+}
 
-
-
-
-
-
-
-
-
-
-
-}  margin-bottom: 20px;  align-items: center;  justify-content: space-between;  display: flex;.dashboard-header {}  padding: 20px;.dashboard {/* dashboard.css */}
 .habit-cards {
   display: flex;
   flex-wrap: wrap;
@@ -30,12 +30,12 @@
 }
 
 .habit-card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 20px;
-  width: calc(33.333% - 20px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: calc(33.333% - 20px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card-header {
@@ -67,91 +67,102 @@
 
 /* forms.css */
 .form-container {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}  margin-top: 20px;  text-align: center;.back-link {}  gap: 10px;  display: flex;.action-buttons {}  margin-bottom: 20px;.habit-actions {}  margin-bottom: 10px;.habit-property {}  margin-bottom: 20px;.habit-info-card {}  margin-bottom: 20px;  align-items: center;  justify-content: space-between;  display: flex;.header-actions {}  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  border-radius: 8px;  border: 1px solid #ddd;  background-color: #fff;  padding: 20px;  margin: 0 auto;  max-width: 800px;.habit-detail {/* habit_detail.css */}  margin-top: 5px;  color: #ff0000;.error {}  background-color: #0056b3;.form-actions .btn:hover {}  cursor: pointer;  color: #fff;  background-color: #007bff;  border-radius: 4px;  border: none;  padding: 10px 20px;.form-actions .btn {}  align-items: center;  justify-content: space-between;  display: flex;.form-actions {}  border-radius: 4px;  border: 1px solid #ddd;
-
-
-
-
-
-
-
-
-  padding: 10px;  width: 100%;.form-group .form-control {}  margin-bottom: 5px;  display: block;.form-group label {}  margin-bottom: 20px;.form-group {}  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  border-radius: 8px;  border: 1px solid #ddd;  max-width: 600px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.back-link {
+  display: flex;
+  gap: 10px;
+}
+
+.action-buttons {
+  margin-bottom: 20px;
+}
+
+.habit-actions {
+  margin-bottom: 10px;
+}
+
+.habit-property {
+  margin-bottom: 20px;
+}
+
+.habit-info-card {
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+}
+
+.header-actions {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 20px;
   margin: 0 auto;
+  max-width: 800px;
+}
+
+.habit-detail {
+  /* habit_detail.css */
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 800px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.error {
+  margin-top: 5px;
+  color: #ff0000;
+}
+
+.form-actions .btn:hover {
+  background-color: #0056b3;
+}
+
+.form-actions .btn {
+  cursor: pointer;
+  color: #fff;
+  background-color: #007bff;
+  border-radius: 4px;
+  border: none;
+  padding: 10px 20px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-group .form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
   padding: 20px;
   background-color: #fff;
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
