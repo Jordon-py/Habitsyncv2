@@ -1,112 +1,143 @@
-/* Main application styles */
-:root {
-  --primary-color: #a777e3;
-  --secondary-color: #6e8efb;
-  --success-color: #28a745;
-  --danger-color: #dc3545;
-  --background-color: #2c3e50;
-  --text-color: #8d99a4;
-  --subtext-color: #94a5b6;
-  --border-color: #dde1e7;
-}
+/* Main CSS file for HabitSync */
 
-
-
-.ballet-font {
-  font-family: "Ballet", cursive;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
-/* Global Styles */
+/* Base styles */
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  color: var(--text-color);
-  background-color: var(--background-color);
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #210202;
+    margin: 0;
+    padding: 0;
+    background-color: #10263b;
 }
 
+/* Typography */
+.ballet-font {
+    font-family: 'Ballet', cursive;
+    font-weight: normal;
+}
+
+h1 .ballet-font {
+    font-size: 6rem;
+    color: #210202;
+    margin-top: 0.5rem;
+}
+
+h2 .ballet-font {
+    font-size: 2rem;
+    margin-top: 0.5rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+    color: #1a5289cb;
+    margin-bottom: 1rem;
+}
+
+/* Layout */
 header {
-  background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
-  color: white;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #3498db;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-
-header h1  {
-  font-family: "Ballet", cursive;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-}
-
 
 nav {
-  display: flex;
-  gap: 1.5rem;
-  padding: 1rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
 }
 
 nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: opacity 0.2s;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 nav a:hover {
-  opacity: 0.8;
+    background-color: rgba(255,255,255,0.2);
 }
 
 main {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1.5rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    min-height: calc(100vh - 200px);
 }
 
 footer {
-  background-color: #f1f1f1;
-  color: var(--subtext-color);
-  text-align: center;
-  padding: 1.5rem;
-  margin-top: 3rem;
-  border-top: 1px solid var(--border-color);
+    text-align: center;
+    padding: 1rem;
+    background-color: #2c3e50;
+    color: white;
+    margin-top: 2rem;
 }
 
-/* Buttons */
-.btn {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: var(--secondary-color);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: background-color 0.2s, transform 0.2s;
+/* Forms */
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.btn:hover {
-  background-color: #5d7de0;
-  transform: translateY(-2px);
+input, textarea, select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
-.btn-primary {
-  background-color: var(--primary-color);
+button, .button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
-.btn-primary:hover {
-  background-color: #9061d0;
+button:hover, .button:hover {
+    background-color: #2980b9;
 }
 
-.btn-danger {
-  background-color: var(--danger-color);
+/* Habits list */
+.habits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
 }
 
-.btn-danger:hover {
-  background-color: #bd2130;
+.habit-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.habit-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .habits-list {
+        grid-template-columns: 1fr;
+    }
 }

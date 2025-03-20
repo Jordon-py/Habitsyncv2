@@ -13,7 +13,7 @@ FREQUENCY_CHOICES = (
 class Habit(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     
-    name = models.CharField(max_length=40)
+    name = models.CharField(max_length=80)
     description = models.TextField(blank=True)
     frequency = models.CharField(max_length=10, choices=FREQUENCY_CHOICES, default='daily')
     created_at = models.DateTimeField(auto_now_add=True)

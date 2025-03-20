@@ -16,9 +16,9 @@ except ImportError:
     pass
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-if not SECRET_KEY:
-    raise RuntimeError("SECRET_KEY environment variable not set. Aborting...")
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-default-dev-key-change-in-production')
+if os.environ.get('DYNO') and SECRET_KEY == 'django-insecure-default-dev-key-change-in-production':
+    raise RuntimeError("SECRET_KEY environment variable not set in production. Aborting...")
 
 # Default: False for production (Heroku)
 DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 't')
@@ -39,19 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sessions',
     'tracker',
+    'whitenoise.runserver_nostatic',  # Add this for better local static file serving with WhiteNoise
 ]
 
 # Whitenoise check
-USE_WHITENOISE = False
-try:
-    import whitenoise
-    USE_WHITENOISE = True
-except ImportError:
-    pass
+USE_WHITENOISE = True  # Always use WhiteNoise on Heroku
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    *(['whitenoise.middleware.WhiteNoiseMiddleware'] if USE_WHITENOISE else []),
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # WhiteNoise should always be enabled for Heroku
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -111,14 +107,15 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+# Static files configuration - ensure this is properly set
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'tracker', 'static'),
 ]
 
 # WhiteNoise for production
-if not DEBUG:
+if USE_WHITENOISE:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'

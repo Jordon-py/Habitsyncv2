@@ -68,7 +68,7 @@ def delete(request, habit_id):
 
 @login_required
 def habit(request, habit_id):
-    habit = get_object_or_404(Habit, id=habit.id, user=request.user)
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
     return render(request, 'habit_detail.html', {'habit': habit})
 
 def record(request, habit_id):

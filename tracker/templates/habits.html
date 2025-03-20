@@ -25,7 +25,7 @@
                 <div class="habit-actions">
                     <a href="{% url 'tracker:habit' habit.id %}" class="btn">View</a>
                     <a href="{% url 'tracker:update' habit.id %}" class="btn">Edit</a>
-                    <a href="{% url 'tracker:delete' habit.id %}" class="btn">Delete</a>
+                    <a href="{% url 'tracker:delete' habit.id %}" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         {% empty %}
