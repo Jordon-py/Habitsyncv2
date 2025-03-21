@@ -12,7 +12,7 @@ env/
 ENV/
 
 # Database
-*.sqlite3
+*.postgresql
 
 # Static files
 staticfiles/
