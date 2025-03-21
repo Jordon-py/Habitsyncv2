@@ -28,14 +28,15 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 # Parse ALLOWED_HOSTS from environment
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 INSTALLED_APPS = [
-    'django.contrib.admin',  # Fixed - removed comma between contrib. and admin
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'whitenoise.runserver_nostatic',  # Add this for better local static file serving with WhiteNoise
+    'whitenoise.runserver_nostatic',
     'tracker',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
