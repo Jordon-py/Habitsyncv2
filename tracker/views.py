@@ -5,6 +5,7 @@ from .models import Habit
 from .forms import HabitForm
 from django.contrib.auth import logout, login
 from django.contrib.auth.forms import UserCreationForm
+from django.utils import timezone
 
 # Home view renders the dashboard using home.html
 def home(request):
@@ -71,22 +72,38 @@ def habit(request, habit_id):
     habit = get_object_or_404(Habit, id=habit_id, user=request.user)
     return render(request, 'habit_detail.html', {'habit': habit})
 
+@login_required
 def record(request, habit_id):
+    # For future implementation
     return HttpResponse(f"Record Habit {habit_id}")
 
+@login_required
 def delete_record(request, habit_id):
+    # For future implementation
     return HttpResponse(f"Delete Record for Habit {habit_id}")
 
+@login_required
 def update_record(request, habit_id):
+    # For future implementation
     return HttpResponse(f"Update Record for Habit {habit_id}")
 
+@login_required
 def complete(request, habit_id):
-    return HttpResponse(f"Complete Habit {habit_id}")
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+    habit.completed = True
+    habit.save()
+    return redirect('tracker:habit', habit_id=habit_id)
 
+@login_required
 def incomplete(request, habit_id):
-    return HttpResponse(f"Incomplete Habit {habit_id}")
+    habit = get_object_or_404(Habit, id=habit_id, user=request.user)
+    habit.completed = False
+    habit.save()
+    return redirect('tracker:habit', habit_id=habit_id)
 
+@login_required
 def stats(request, habit_id):
+    # For future implementation
     return HttpResponse(f"Stats for Habit {habit_id}")
 
 def register(request):
