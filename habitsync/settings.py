@@ -23,10 +23,10 @@ except ImportError:
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # Default: False for production (Heroku)
-DEBUG = os.environ.get('DEBUG') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Parse ALLOWED_HOSTS from environment
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -74,10 +74,19 @@ WSGI_APPLICATION = 'habitsync.wsgi.application'
 # Database
 import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-}
-
+# Use DATABASE_URL environment variable, or fall back to a SQLite database for local development
+database_url = os.environ.get('DATABASE_URL')
+if database_url:
+    DATABASES = {
+        'default': dj_database_url.config(default=database_url)
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -117,7 +126,17 @@ LOGIN_REDIRECT_URL = 'tracker:home'
 LOGOUT_REDIRECT_URL = 'tracker:home'
 LOGIN_URL = 'tracker:login'
 
-# HTTPS settings for production
-if not DEBUG:
+# HTTPS settings only for production and when USE_HTTPS is explicitly set to True
+USE_HTTPS = os.environ.get('USE_HTTPS', 'False') == 'True'
+if not DEBUG and USE_HTTPS:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+else:
+    # Explicitly set these to False to ensure HTTP works properly
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+    # Don't set SECURE_SSL_REDIRECT in HTTP mode

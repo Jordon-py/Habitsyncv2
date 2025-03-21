@@ -33,18 +33,18 @@ This project is a Django-based web application implementing full CRUD functional
    ```bash
    pip install -r requirements.txt
    ```
-5. Create a .env file with your environment variables:
+5. Create a .env file with your environment variables (copy from .env.example):
    ```
    SECRET_KEY=your_secure_secret_key_here
-   ALLOWED_HOSTS=localhost,127.0.0.1
    DEBUG=True
-   DB_NAME=habitsync_db
-   DB_USER=your_db_user
-   DB_PASSWORD=your_db_password
-   DB_HOST=localhost
-   DB_PORT=5432
+   ALLOWED_HOSTS=localhost,127.0.0.1
+   USE_HTTPS=False
+   # Leave DATABASE_URL empty to use SQLite for local development
    ```
-6. Create a PostgreSQL database named 'habitsync_db'
+6. For PostgreSQL (optional), create a database and add to .env:
+   ```
+   DATABASE_URL=postgres://user:password@localhost:5432/habitsync_db
+   ```
 7. Run database migrations:
    ```bash
    python manage.py migrate
@@ -53,6 +53,12 @@ This project is a Django-based web application implementing full CRUD functional
    ```bash
    python manage.py runserver
    ```
+9. Visit http://localhost:8000 in your browser
+
+### Running on HTTP vs HTTPS
+- For local development, HTTP is the default (USE_HTTPS=False)
+- For production with HTTPS, set USE_HTTPS=True in environment variables
+- When USE_HTTPS is False, secure cookies are disabled for HTTP compatibility
 
 ### GitHub and Heroku Deployment
 1. Create a new GitHub repository and push your code:
@@ -82,6 +88,10 @@ This project is a Django-based web application implementing full CRUD functional
    heroku config:set SECRET_KEY=your_secure_secret_key_here
    heroku config:set DEBUG=False
    heroku config:set ALLOWED_HOSTS=your-app-name.herokuapp.com,localhost,127.0.0.1
+   # For HTTPS (recommended in production):
+   heroku config:set USE_HTTPS=True
+   # For HTTP only (not recommended in production):
+   heroku config:set USE_HTTPS=False
    ```
 7. Deploy from GitHub:
    - Go to the Heroku Dashboard
@@ -105,7 +115,7 @@ This project is a Django-based web application implementing full CRUD functional
 
 ## *Technologies Used*
 - Django
-- PostgreSQL
+- PostgreSQL (or SQLite for local development)
 - HTML, CSS (Flexbox & Grid)
 - Python
 - Heroku (Deployment)
