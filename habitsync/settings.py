@@ -23,18 +23,17 @@ except ImportError:
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # Default: False for production (Heroku)
-DEBUG = os.environ.get('False') == 'True'
+DEBUG = os.environ.get('DEBUG') == 'True'
 
 # Parse ALLOWED_HOSTS from environment
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 INSTALLED_APPS = [
-    'django.contrib',
+    'django.contrib.,admin',
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.authtypes',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',  # Add this for better local static file serving with WhiteNoise
     'tracker',
 ]
@@ -108,7 +107,7 @@ STATICFILES_DIRS = [
 ]
 
 # WhiteNoise for production static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # serving in production
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -119,7 +118,5 @@ LOGIN_URL = 'tracker:login'
 
 # HTTPS settings for production
 if not DEBUG:
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-    SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True

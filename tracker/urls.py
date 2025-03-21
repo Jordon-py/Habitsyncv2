@@ -19,6 +19,6 @@ urlpatterns = [
     path('habit/<int:habit_id>/stats/', views.stats, name='stats'),
     path('about/', views.about, name='about'), 
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', LogoutView.as_view(template_name='home.html'), name='logout'),
+    path('logout/', LogoutView.as_view(template_name='logout.html'), name='logout'),
     path('register/', views.register, name='register'),
 ]

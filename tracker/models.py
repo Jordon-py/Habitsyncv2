@@ -21,5 +21,4 @@ class Habit(models.Model):
     def __str__(self):
         return (f"Habit(name='{self.name}', description='{self.description}', "
                 f"created_at='{self.created_at}', updated_at='{self.updated_at}', "
-                f"completed={self.completed}, frequency='{self.frequency}', "
-                f"start_date='{self.start_date}', end_date='{self.end_date}')")
+                f"completed={self.completed}, frequency='{self.frequency}')")
